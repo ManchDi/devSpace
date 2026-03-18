@@ -93,6 +93,16 @@ textarea { resize: none; }
   pointer-events: none;
 }
 
+#bg-dim {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
 /* ─────────────────────────────────────────
    APP CONTAINER — free-float, no grid
 ───────────────────────────────────────── */
@@ -548,11 +558,45 @@ textarea { resize: none; }
   font-family: var(--font-mono); font-size: 0.6rem;
   text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent);
 }
-.settings-section { margin-bottom: 20px; }
+.settings-section { margin-bottom: 4px; }
+
+.settings-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  user-select: none;
+}
+.settings-section-header:hover .settings-section-label { color: var(--text); }
+
 .settings-section-label {
   font-family: var(--font-mono); font-size: 0.52rem;
   text-transform: uppercase; letter-spacing: 0.14em;
-  color: var(--text-muted); margin-bottom: 10px;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+
+.settings-chevron {
+  font-size: 0.55rem;
+  color: var(--text-dim);
+  transition: transform 0.22s ease, color 0.15s;
+  flex-shrink: 0;
+}
+.settings-section.open .settings-chevron { transform: rotate(180deg); color: var(--accent); }
+
+.settings-section-body {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.28s ease, opacity 0.22s ease, padding 0.22s ease;
+  padding-top: 0;
+}
+.settings-section.open .settings-section-body {
+  max-height: 600px;
+  opacity: 1;
+  padding-top: 12px;
 }
 
 .color-swatches { display: flex; flex-wrap: wrap; gap: 7px; }

@@ -37,13 +37,37 @@ export function toast(msg, duration = 2500) {
 }
 
 /** Parse a YouTube URL or ID → video ID, or null */
+/**
+ * Parse a YouTube URL into { type, id } where type is 'video' or 'playlist'.
+ * Handles:
+ *   - youtube.com/watch?v=ID
+ *   - youtube.com/watch?v=ID&list=PLID   (video inside playlist → treat as playlist)
+ *   - youtube.com/playlist?list=PLID
+ *   - youtu.be/ID
+ *   - music.youtube.com/watch?v=ID
+ *   - music.youtube.com/playlist?list=PLID
+ *   - bare 11-char video ID
+ */
 export function parseYouTubeId(input) {
   const clean = input.trim()
-  const match = clean.match(
-    /(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/
-  )
-  if (match) return match[1]
-  if (/^[a-zA-Z0-9_-]{11}$/.test(clean)) return clean
+  try {
+    // Normalise music.youtube.com → youtube.com for URL parsing
+    const normalised = clean.replace(/music\.youtube\.com/, 'youtube.com')
+    const url = new URL(normalised.startsWith('http') ? normalised : `https://${normalised}`)
+    const list  = url.searchParams.get('list')
+    const v     = url.searchParams.get('v')
+
+    // Explicit playlist page, or video page that also has a list param → use playlist
+    if (list) return { type: 'playlist', id: list }
+    if (v)    return { type: 'video',    id: v }
+
+    // youtu.be/ID
+    const shortMatch = url.pathname.match(/\/([a-zA-Z0-9_-]{11})$/)
+    if (shortMatch) return { type: 'video', id: shortMatch[1] }
+  } catch { /* not a URL — fall through */ }
+
+  // Bare 11-char video ID
+  if (/^[a-zA-Z0-9_-]{11}$/.test(clean)) return { type: 'video', id: clean }
   return null
 }
 

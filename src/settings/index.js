@@ -53,180 +53,228 @@ export class Settings {
         </div>
 
         <!-- Accent color -->
-        <div class="settings-section">
-          <div class="settings-section-label">Accent Color</div>
-          <div class="color-swatches" id="s-swatches">
-            ${ACCENT_PRESETS.map(c => `
-              <div class="swatch" style="background:${c}" data-color="${c}"></div>
-            `).join('')}
+        <div class="settings-section" data-section="accent">
+          <div class="settings-section-header">
+            <span class="settings-section-label">Accent Color</span>
+            <span class="settings-chevron">▾</span>
           </div>
-          <div class="custom-color-row">
-            <input type="color" id="s-color-picker" value="#c8976e" title="Custom color">
-            <input class="text-input" id="s-hex-input" placeholder="#c8976e"
-              style="font-family:var(--font-mono);font-size:0.7rem">
+          <div class="settings-section-body">
+            <div class="color-swatches" id="s-swatches">
+              ${ACCENT_PRESETS.map(c => `
+                <div class="swatch" style="background:${c}" data-color="${c}"></div>
+              `).join('')}
+            </div>
+            <div class="custom-color-row">
+              <input type="color" id="s-color-picker" value="#c8976e" title="Custom color">
+              <input class="text-input" id="s-hex-input" placeholder="#c8976e"
+                style="font-family:var(--font-mono);font-size:0.7rem">
+            </div>
           </div>
         </div>
 
         <!-- Background -->
-        <div class="settings-section">
-          <div class="settings-section-label">Background</div>
-          <div class="bg-presets" id="s-bg-presets">
-            <div class="bg-preset" data-bg="none" title="Animated blobs (default)">
-              <div class="bg-preset-inner" style="background:linear-gradient(135deg,#0b0d13,#1a1530)">
-                <span>default</span>
+        <div class="settings-section" data-section="background">
+          <div class="settings-section-header">
+            <span class="settings-section-label">Background</span>
+            <span class="settings-chevron">▾</span>
+          </div>
+          <div class="settings-section-body">
+            <div class="bg-presets" id="s-bg-presets">
+              <div class="bg-preset" data-bg="none" title="Animated blobs (default)">
+                <div class="bg-preset-inner" style="background:linear-gradient(135deg,#0b0d13,#1a1530)">
+                  <span>default</span>
+                </div>
+              </div>
+              <div class="bg-preset" data-bg="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80" title="Mountain night">
+                <div class="bg-preset-inner" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
+                  <span>night</span>
+                </div>
+              </div>
+              <div class="bg-preset" data-bg="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80" title="Space">
+                <div class="bg-preset-inner" style="background:linear-gradient(135deg,#000011,#0a0020)">
+                  <span>space</span>
+                </div>
+              </div>
+              <div class="bg-preset" data-bg="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=1920&q=80" title="Forest">
+                <div class="bg-preset-inner" style="background:linear-gradient(135deg,#0d1f0d,#1a2e1a)">
+                  <span>forest</span>
+                </div>
               </div>
             </div>
-            <div class="bg-preset" data-bg="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80" title="Mountain night">
-              <div class="bg-preset-inner" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
-                <span>night</span>
+            <button class="s-upload-btn" id="s-bg-upload">↑ Upload Image / Video</button>
+            <button class="s-neutral-btn" id="s-bg-clear" style="margin-top:4px">Clear Background</button>
+
+            <!-- Dim overlay slider -->
+            <div class="transparency-row" style="margin-top:14px">
+              <div class="transparency-labels">
+                <span>None</span>
+                <span class="transparency-title">Background Dim</span>
+                <span>Dark</span>
               </div>
-            </div>
-            <div class="bg-preset" data-bg="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80" title="Space">
-              <div class="bg-preset-inner" style="background:linear-gradient(135deg,#000011,#0a0020)">
-                <span>space</span>
-              </div>
-            </div>
-            <div class="bg-preset" data-bg="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=1920&q=80" title="Forest">
-              <div class="bg-preset-inner" style="background:linear-gradient(135deg,#0d1f0d,#1a2e1a)">
-                <span>forest</span>
-              </div>
+              <input type="range" id="s-bg-dim" min="0" max="80" value="0"
+                class="transparency-slider">
+              <div class="transparency-hint" id="s-bg-dim-hint">Off</div>
             </div>
           </div>
-
-          <button class="s-upload-btn" id="s-bg-upload">↑ Upload Image / Video</button>
-          <button class="s-neutral-btn" id="s-bg-clear" style="margin-top:4px">Clear Background</button>
         </div>
 
         <!-- Wallpaper Rotation -->
-        <div class="settings-section">
-          <div class="settings-section-label">Wallpaper Rotation</div>
-
-          <!-- Pool source -->
-          <div class="rotation-pool-row">
-            <button class="s-neutral-btn" id="s-rot-pick-dir">📁 Pick Folder</button>
-            <button class="s-neutral-btn" id="s-rot-pick-files">🖼 Pick Files</button>
+        <div class="settings-section" data-section="rotation">
+          <div class="settings-section-header">
+            <span class="settings-section-label">Wallpaper Rotation</span>
+            <span class="settings-chevron">▾</span>
           </div>
-          <div class="rotation-pool-status" id="s-rot-status">No wallpaper pool set</div>
-          <button class="s-neutral-btn" id="s-rot-clear" style="margin-top:4px;display:none">✕ Clear Pool</button>
-
-          <!-- Enable toggle -->
-          <div class="widget-toggle-row" id="s-rot-toggle-row" style="margin-top:10px;opacity:0.4;pointer-events:none">
-            <span class="widget-toggle-label">Auto-rotate</span>
-            <div class="toggle" id="tog-rotation"></div>
-          </div>
-
-          <!-- Interval -->
-          <div class="rotation-interval-row" id="s-rot-interval-row" style="margin-top:8px;opacity:0.4;pointer-events:none">
-            <span class="widget-toggle-label">Change every</span>
-            <div class="rotation-interval-input">
-              <input type="number" id="s-rot-minutes" min="1" max="120" value="10"
-                class="text-input rotation-num-input">
-              <span class="rotation-unit">min</span>
+          <div class="settings-section-body">
+            <div class="rotation-pool-row">
+              <button class="s-neutral-btn" id="s-rot-pick-dir">📁 Pick Folder</button>
+              <button class="s-neutral-btn" id="s-rot-pick-files">🖼 Pick Files</button>
             </div>
-          </div>
-
-          <!-- Order -->
-          <div class="rotation-order-row" id="s-rot-order-row" style="margin-top:8px;opacity:0.4;pointer-events:none">
-            <span class="widget-toggle-label">Order</span>
-            <div class="rotation-order-btns">
-              <button class="rot-order-btn active" data-order="sequential">Sequential</button>
-              <button class="rot-order-btn" data-order="random">Random</button>
+            <div class="rotation-pool-status" id="s-rot-status">No wallpaper pool set</div>
+            <button class="s-neutral-btn" id="s-rot-clear" style="margin-top:4px;display:none">✕ Clear Pool</button>
+            <div class="widget-toggle-row" id="s-rot-toggle-row" style="margin-top:10px;opacity:0.4;pointer-events:none">
+              <span class="widget-toggle-label">Auto-rotate</span>
+              <div class="toggle" id="tog-rotation"></div>
             </div>
+            <div class="rotation-interval-row" id="s-rot-interval-row" style="margin-top:8px;opacity:0.4;pointer-events:none">
+              <span class="widget-toggle-label">Change every</span>
+              <div class="rotation-interval-input">
+                <input type="number" id="s-rot-minutes" min="1" max="120" value="10"
+                  class="text-input rotation-num-input">
+                <span class="rotation-unit">min</span>
+              </div>
+            </div>
+            <div class="rotation-order-row" id="s-rot-order-row" style="margin-top:8px;opacity:0.4;pointer-events:none">
+              <span class="widget-toggle-label">Order</span>
+              <div class="rotation-order-btns">
+                <button class="rot-order-btn active" data-order="sequential">Sequential</button>
+                <button class="rot-order-btn" data-order="random">Random</button>
+              </div>
+            </div>
+            <button class="s-neutral-btn" id="s-rot-next" style="margin-top:8px;display:none">⏭ Next Wallpaper</button>
           </div>
-
-          <!-- Manual advance -->
-          <button class="s-neutral-btn" id="s-rot-next" style="margin-top:8px;display:none">
-            ⏭ Next Wallpaper
-          </button>
         </div>
 
         <!-- Video FPS Cap -->
-        <div class="settings-section">
-          <div class="settings-section-label">Video Background FPS</div>
-          <div class="transparency-row">
-            <div class="transparency-labels">
-              <span>10</span>
-              <span class="transparency-title">FPS Cap</span>
-              <span>60</span>
-            </div>
-            <input type="range" id="s-video-fps" min="10" max="60" step="5" value="30"
-              class="transparency-slider">
-            <div class="transparency-hint" id="s-fps-hint">30 fps</div>
+        <div class="settings-section" data-section="fps">
+          <div class="settings-section-header">
+            <span class="settings-section-label">Video Background FPS</span>
+            <span class="settings-chevron">▾</span>
           </div>
-          <p class="settings-hint">Only affects video backgrounds drawn via canvas. Lower = less GPU load.</p>
+          <div class="settings-section-body">
+            <div class="transparency-row">
+              <div class="transparency-labels">
+                <span>10</span>
+                <span class="transparency-title">FPS Cap</span>
+                <span>60</span>
+              </div>
+              <input type="range" id="s-video-fps" min="10" max="60" step="5" value="30"
+                class="transparency-slider">
+              <div class="transparency-hint" id="s-fps-hint">30 fps</div>
+            </div>
+            <p class="settings-hint">Only affects video backgrounds. Lower = less GPU load.</p>
+          </div>
         </div>
 
         <!-- Appearance -->
-        <div class="settings-section">
-          <div class="settings-section-label">Appearance</div>
-          <div class="widget-toggles">
-            <div class="widget-toggle-row">
-              <span class="widget-toggle-label">Widget Borders</span>
-              <div class="toggle" id="tog-borders"></div>
-            </div>
+        <div class="settings-section" data-section="appearance">
+          <div class="settings-section-header">
+            <span class="settings-section-label">Appearance</span>
+            <span class="settings-chevron">▾</span>
           </div>
-
-          <!-- Transparency slider -->
-          <div class="transparency-row">
-            <div class="transparency-labels">
-              <span>Solid</span>
-              <span class="transparency-title">Widget Glass</span>
-              <span>Ghost</span>
+          <div class="settings-section-body">
+            <div class="widget-toggles">
+              <div class="widget-toggle-row">
+                <span class="widget-toggle-label">Widget Borders</span>
+                <div class="toggle" id="tog-borders"></div>
+              </div>
             </div>
-            <input type="range" id="s-transparency" min="0" max="100" value="50"
-              class="transparency-slider">
-            <div class="transparency-hint" id="s-transparency-hint">Default</div>
+            <div class="transparency-row">
+              <div class="transparency-labels">
+                <span>Solid</span>
+                <span class="transparency-title">Widget Glass</span>
+                <span>Ghost</span>
+              </div>
+              <input type="range" id="s-transparency" min="0" max="100" value="50"
+                class="transparency-slider">
+              <div class="transparency-hint" id="s-transparency-hint">Default</div>
+            </div>
           </div>
         </div>
 
         <!-- Widget visibility -->
-        <div class="settings-section">
-          <div class="settings-section-label">Widgets</div>
-          <div class="widget-toggles" id="s-widget-toggles">
-            ${WIDGETS.map(w => `
-              <div class="widget-toggle-row">
-                <span class="widget-toggle-label">${w.label}</span>
-                <div class="toggle on" data-widget="${w.id}"></div>
-              </div>
-            `).join('')}
+        <div class="settings-section" data-section="widgets">
+          <div class="settings-section-header">
+            <span class="settings-section-label">Widgets</span>
+            <span class="settings-chevron">▾</span>
+          </div>
+          <div class="settings-section-body">
+            <div class="widget-toggles" id="s-widget-toggles">
+              ${WIDGETS.map(w => `
+                <div class="widget-toggle-row">
+                  <span class="widget-toggle-label">${w.label}</span>
+                  <div class="toggle on" data-widget="${w.id}"></div>
+                </div>
+              `).join('')}
+            </div>
           </div>
         </div>
 
         <!-- Layout -->
-        <div class="settings-section">
-          <div class="settings-section-label">Layout</div>
-          <button class="s-neutral-btn" id="s-reset-positions">Reset Widget Positions</button>
-          <button class="s-neutral-btn" id="s-reset-sizes">Reset Widget Sizes</button>
+        <div class="settings-section" data-section="layout">
+          <div class="settings-section-header">
+            <span class="settings-section-label">Layout</span>
+            <span class="settings-chevron">▾</span>
+          </div>
+          <div class="settings-section-body">
+            <button class="s-neutral-btn" id="s-reset-positions">Reset Widget Positions</button>
+            <button class="s-neutral-btn" id="s-reset-sizes">Reset Widget Sizes</button>
+          </div>
         </div>
 
         <!-- Data persistence -->
-        <div class="settings-section">
-          <div class="settings-section-label">Auto-Save to File</div>
-          <div class="save-file-status" id="s-file-status">
-            <span class="save-file-dot" id="s-file-dot"></span>
-            <span class="save-file-name" id="s-file-name">Not configured</span>
+        <div class="settings-section" data-section="autosave">
+          <div class="settings-section-header">
+            <span class="settings-section-label">Auto-Save to File</span>
+            <span class="settings-chevron">▾</span>
           </div>
-          <button class="s-neutral-btn" id="s-open-file">Open Existing File…</button>
-          <button class="s-neutral-btn" id="s-pick-file">Create New Save File…</button>
-          <button class="s-neutral-btn" id="s-unlink-file" style="display:none">Unlink Save File</button>
-          <p class="settings-hint" id="s-fs-hint"></p>
+          <div class="settings-section-body">
+            <div class="save-file-status" id="s-file-status">
+              <span class="save-file-dot" id="s-file-dot"></span>
+              <span class="save-file-name" id="s-file-name">Not configured</span>
+            </div>
+            <button class="s-neutral-btn" id="s-open-file">Open Existing File…</button>
+            <button class="s-neutral-btn" id="s-pick-file">Create New Save File…</button>
+            <button class="s-neutral-btn" id="s-unlink-file" style="display:none">Unlink Save File</button>
+            <p class="settings-hint" id="s-fs-hint"></p>
+          </div>
         </div>
 
         <!-- Data export -->
-        <div class="settings-section">
-          <div class="settings-section-label">Manual Backup</div>
-          <button class="s-neutral-btn" id="s-export">Export Backup (JSON)</button>
-          <button class="s-danger-btn"  id="s-clear">Clear All Data</button>
+        <div class="settings-section" data-section="backup">
+          <div class="settings-section-header">
+            <span class="settings-section-label">Manual Backup</span>
+            <span class="settings-chevron">▾</span>
+          </div>
+          <div class="settings-section-body">
+            <button class="s-neutral-btn" id="s-export">Export Backup (JSON)</button>
+            <button class="s-danger-btn"  id="s-clear">Clear All Data</button>
+          </div>
         </div>
 
         <!-- Shortcuts -->
-        <div class="settings-section">
-          <div class="settings-section-label">Shortcuts</div>
-          <div class="shortcuts-list">
-            <span>Ctrl+Space</span> — Start / Pause timer<br>
-            <span>S</span> — Open settings
+        <div class="settings-section" data-section="shortcuts">
+          <div class="settings-section-header">
+            <span class="settings-section-label">Shortcuts</span>
+            <span class="settings-chevron">▾</span>
+          </div>
+          <div class="settings-section-body">
+            <div class="shortcuts-list">
+              <span>Ctrl+Space</span> — Start / Pause timer<br>
+              <span>S</span> — Open settings
+            </div>
           </div>
         </div>
+
       </div>
     `
 
@@ -246,6 +294,40 @@ export class Settings {
     document.getElementById('settings-btn').addEventListener('click', open)
     document.getElementById('s-close').addEventListener('click', close)
     overlay.addEventListener('click', close)
+
+    // ── Accordion sections ────────────────────────────────────────────────────
+    const savedOpen = (() => {
+      try { return JSON.parse(localStorage.getItem('devstation_open_sections') ?? '[]') } catch { return [] }
+    })()
+
+    document.querySelectorAll('.settings-section').forEach(section => {
+      const key    = section.dataset.section
+      const header = section.querySelector('.settings-section-header')
+
+      if (savedOpen.includes(key)) section.classList.add('open')
+
+      header.addEventListener('click', () => {
+        section.classList.toggle('open')
+        const nowOpen = [...document.querySelectorAll('.settings-section.open')]
+          .map(s => s.dataset.section)
+        localStorage.setItem('devstation_open_sections', JSON.stringify(nowOpen))
+      })
+    })
+
+    // ── Background dim slider ─────────────────────────────────────────────────
+    const dimSlider = document.getElementById('s-bg-dim')
+    const dimHint   = document.getElementById('s-bg-dim-hint')
+
+    dimSlider.addEventListener('input', () => {
+      const val = parseInt(dimSlider.value)
+      this._applyBgDim(val)
+      dimHint.textContent = val === 0 ? 'Off' : `${val}%`
+    })
+    dimSlider.addEventListener('change', () => {
+      const val = parseInt(dimSlider.value)
+      const d = store.get('settings') ?? {}
+      store.set('settings', { ...d, bgDim: val })
+    })
 
     // Accent swatches
     document.querySelectorAll('#s-swatches .swatch').forEach(sw => {
@@ -577,6 +659,7 @@ export class Settings {
     const saved        = store.get('settings')
     const borders      = saved?.borders      ?? false
     const transparency = saved?.transparency ?? 50
+    const bgDim        = saved?.bgDim        ?? 0
 
     const tog = document.getElementById('tog-borders')
     tog.classList.toggle('on', borders)
@@ -584,7 +667,18 @@ export class Settings {
 
     const slider = document.getElementById('s-transparency')
     slider.value = transparency
-    this._applyTransparency(transparency, false) // false = don't save again on load
+    this._applyTransparency(transparency, false)
+
+    const dimSlider = document.getElementById('s-bg-dim')
+    const dimHint   = document.getElementById('s-bg-dim-hint')
+    dimSlider.value     = bgDim
+    dimHint.textContent = bgDim === 0 ? 'Off' : `${bgDim}%`
+    this._applyBgDim(bgDim)
+  }
+
+  _applyBgDim(val) {
+    const el = document.getElementById('bg-dim')
+    if (el) el.style.opacity = (val / 100).toFixed(2)
   }
 
   /**
