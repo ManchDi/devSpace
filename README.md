@@ -1,6 +1,8 @@
-# DevStation
+# devSpace
 
 > A no-backend coding session dashboard. Minimal, moody, built to stay out of your way.
+
+![devSpace](screenshots/devSpace.png)
 
 Built with vanilla JS and Vite — no framework, no cloud, no accounts. Everything lives on your machine.
 
@@ -78,7 +80,7 @@ export default defineConfig({
 
 ## Data Persistence
 
-DevStation uses a two-layer storage approach:
+devSpace uses a two-layer storage approach:
 
 **Layer 1 — localStorage** (always on, automatic)
 Fast synchronous reads/writes. Data is keyed to `localhost:4173`. Survives restarts but not browser data clears.
@@ -114,6 +116,8 @@ Upload any image or video file as your background via **Settings → Background 
 ## Project Structure
 
 ```
+screenshots/
+└── devSpace.png             # Repository screenshot (used by portfolio)
 src/
 ├── main.js                  # Entry — wires background, widgets, drag, settings
 ├── background.js            # Canvas blobs + FPS-throttled video rendering
