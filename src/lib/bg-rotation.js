@@ -126,6 +126,13 @@ export async function initRotation(applyFn) {
   _currentIdx = cfg.currentIndex ?? 0
 
   if (cfg.enabled && _pool.length) {
+    // Apply the current wallpaper immediately on startup so we restore
+    // exactly where we left off instead of falling back to bgFile
+    const handle = _pool[Math.min(_currentIdx, _pool.length - 1)]
+    if (handle) {
+      const result = await readHandle(handle)
+      if (result) applyFn(result.buffer, result.type)
+    }
     startTimer(cfg.intervalMinutes)
   }
 }

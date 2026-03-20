@@ -17,25 +17,26 @@ import { initResize }  from './lib/resize.js'
 import { initStorage } from './lib/store.js'
 import { Settings }    from './settings/index.js'
 import { WIDGETS }     from './widgets/registry.js'
-import { initRotation, getVideoBgFps } from './lib/bg-rotation.js'
+import { initRotation, getVideoBgFps, getPoolInfo } from './lib/bg-rotation.js'
 
 // ── Background phase 1 — silent restore (no gesture needed) ──────────────────
 initBackground()
-await loadBackground()
 window.__bgFns = { applyBackground, setVideoFps }
 
 // ── Storage init — load from disk before mounting widgets ─────────────────────
 await initStorage()
 
 // ── Init wallpaper rotation ───────────────────────────────────────────────────
+// initRotation will apply the current pool wallpaper immediately if enabled,
+// so we only fall back to loadBackground() when rotation is off.
 await initRotation(applyBufferBackground)
+const _rotInfo = getPoolInfo()
+if (!_rotInfo.enabled || !_rotInfo.count) {
+  await loadBackground()
+}
 
 // Apply stored FPS setting on startup
 setVideoFps(getVideoBgFps())
-
-// ── Storage init — load from disk before mounting widgets ─────────────────────
-await initStorage()
-
 // ── Mount widgets ─────────────────────────────────────────────────────────────
 const app       = document.getElementById('app')
 const instances = {}

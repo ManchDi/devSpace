@@ -23,13 +23,15 @@ import { GoalsWidget    } from './goals/index.js'
 import { YouTubeWidget  } from './youtube/index.js'
 import { QuotesWidget   } from './quotes/index.js'
 import { ClockWidget    } from './clock/index.js'
+import { RoutineWidget  } from './routine/index.js'
 
 export const WIDGETS = [
-  { id: 'clock',    label: 'Clock',       Widget: ClockWidget,    default: true },
-  { id: 'pomodoro', label: 'Pomodoro',    Widget: PomodoroWidget, default: true },
-  { id: 'kanban',   label: 'Kanban',      Widget: KanbanWidget,   default: true },
-  { id: 'notes',    label: 'Notes',       Widget: NotesWidget,    default: true },
-  { id: 'goals',    label: 'Daily Goals', Widget: GoalsWidget,    default: true },
-  { id: 'youtube',  label: 'Music',       Widget: YouTubeWidget,  default: true },
-  { id: 'quotes',   label: 'Quotes',      Widget: QuotesWidget,   default: true },
+  { id: 'clock',    label: 'Clock',         Widget: ClockWidget,    default: true },
+  { id: 'pomodoro', label: 'Pomodoro',      Widget: PomodoroWidget, default: true },
+  { id: 'routine',  label: 'Daily Routine', Widget: RoutineWidget,  default: true },
+  { id: 'kanban',   label: 'Kanban',        Widget: KanbanWidget,   default: true },
+  { id: 'notes',    label: 'Notes',         Widget: NotesWidget,    default: true },
+  { id: 'goals',    label: 'Daily Goals',   Widget: GoalsWidget,    default: true },
+  { id: 'youtube',  label: 'Music',         Widget: YouTubeWidget,  default: true },
+  { id: 'quotes',   label: 'Quotes',        Widget: QuotesWidget,   default: true },
 ]
